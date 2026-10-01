@@ -1,0 +1,272 @@
+/* Vice Synth Cyberpunk Theme Styles & Stitch Animations */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+:root {
+    --color-surface: #22003c;
+    --color-surface-dim: #22003c;
+    --color-surface-bright: #4e266d;
+    --color-surface-lowest: #1a0030;
+    --color-surface-low: #2e014e;
+    --color-surface-container: #320652;
+    --color-surface-high: #3d155d;
+    --color-surface-highest: #492168;
+    --color-on-surface: #f2daff;
+    --color-on-surface-variant: #dcbed4;
+    
+    --color-primary: #ffabf3;
+    --color-primary-container: #ff00ff;
+    --color-secondary: #ffffff;
+    --color-secondary-container: #00fbfb;
+    --color-secondary-fixed: #00fbfb;
+    --color-tertiary: #ffb77d;
+    --color-tertiary-container: #db7800;
+    
+    --font-headline: 'Bricolage Grotesque', sans-serif;
+    --font-body: 'Montserrat', sans-serif;
+    --font-label: 'Space Grotesk', monospace;
+}
+
+body {
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* 1. Scanlines Scroll Animation (Stitch original) */
+@keyframes scanline-scroll {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 4px; }
+}
+
+/* 2. CRT Flicker Animation (Stitch original) */
+@keyframes crt-flicker {
+    0% { opacity: 0.96; }
+    5% { opacity: 0.88; }
+    10% { opacity: 0.96; }
+    15% { opacity: 1; }
+    50% { opacity: 0.97; }
+    100% { opacity: 1; }
+}
+
+/* 3. Pulse Glow Animation (Stitch original) */
+@keyframes pulse-glow {
+    0%, 100% { 
+        box-shadow: 0 0 15px rgba(0, 251, 251, 0.6), inset 0 0 10px rgba(0, 251, 251, 0.2); 
+    }
+    50% { 
+        box-shadow: 0 0 32px rgba(0, 251, 251, 0.95), inset 0 0 20px rgba(0, 251, 251, 0.45); 
+    }
+}
+
+/* 4. Float Card Animation (Stitch original) */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+/* 5. Border Flicker Cyan (Stitch original) */
+@keyframes border-flicker-cyan {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        border-color: #00fbfb;
+        box-shadow: 0 0 20px 5px rgba(0, 251, 251, 0.4);
+    }
+    20%, 24%, 55% {
+        border-color: #00dddd;
+        box-shadow: 0 0 5px 2px rgba(0, 251, 251, 0.2);
+    }
+}
+
+/* 6. Border Flicker Pink (Stitch original) */
+@keyframes border-flicker-pink {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        border-color: #ff00ff;
+        box-shadow: 0 0 20px 5px rgba(255, 0, 255, 0.4);
+    }
+    20%, 24%, 55% {
+        border-color: #a900a9;
+        box-shadow: 0 0 5px 2px rgba(255, 0, 255, 0.2);
+    }
+}
+
+/* 7. Grid Perspective Movement */
+@keyframes gridMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 500px; }
+}
+
+/* 8. Road Sign Swing - Left arm */
+@keyframes signSwingLeft {
+    0%, 100% { transform: rotate(-1.5deg) translateY(0px); }
+    50%       { transform: rotate(1.5deg) translateY(-4px); }
+}
+
+/* 9. Road Sign Swing - Right arm (offset phase) */
+@keyframes signSwingRight {
+    0%, 100% { transform: rotate(1.5deg) translateY(-3px); }
+    50%       { transform: rotate(-1.5deg) translateY(2px); }
+}
+
+/* 10. Pink Pulse Glow (border) */
+@keyframes pulseGlowPink {
+    0%, 100% { box-shadow: 0 0 15px rgba(255,0,255,0.6), inset 0 0 10px rgba(255,0,255,0.15); }
+    50%       { box-shadow: 0 0 35px rgba(255,0,255,0.95), inset 0 0 20px rgba(255,0,255,0.4); }
+}
+
+/* 11. Shimmer sweep for progress bar */
+@keyframes shimmer {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(300%); }
+}
+
+/* ==================================================
+   ANIMATION CLASS UTILITIES
+   ================================================== */
+
+/* CRT Overlay Class */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0) 50%,
+        rgba(0,0,0,0.25) 50%,
+        rgba(0,0,0,0.25)
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 99;
+    opacity: 0.65;
+    animation: scanline-scroll 0.5s linear infinite;
+    transition: opacity 0.3s ease;
+}
+
+.scanlines.off {
+    opacity: 0;
+}
+
+.crt-effect {
+    animation: crt-flicker 4s infinite;
+}
+
+.pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.float-card {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-flicker-cyan {
+    animation: border-flicker-cyan 4s infinite alternate;
+}
+
+.animate-flicker-pink {
+    animation: border-flicker-pink 5s infinite alternate-reverse;
+}
+
+/* Multi-layer Neon Text Shadows from Stitch */
+.neon-text-primary {
+    text-shadow: 0 0 10px rgba(255, 171, 243, 0.9), 0 0 20px rgba(255, 171, 243, 0.7), 0 0 30px rgba(255, 171, 243, 0.5);
+}
+
+.neon-text-secondary {
+    text-shadow: 0 0 10px rgba(0, 251, 251, 0.9), 0 0 20px rgba(0, 251, 251, 0.7), 0 0 30px rgba(0, 251, 251, 0.5);
+}
+
+.neon-text-orange {
+    text-shadow: 0 0 10px rgba(255, 183, 125, 0.9), 0 0 20px rgba(255, 183, 125, 0.7);
+}
+
+/* Background Synth Grid */
+.synth-grid {
+    position: fixed;
+    bottom: 0;
+    left: -50%;
+    width: 200%;
+    height: 60vh;
+    background-image: 
+        linear-gradient(to right, rgba(255, 0, 255, 0.15) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 251, 251, 0.15) 1px, transparent 1px);
+    background-size: 50px 50px;
+    transform: perspective(500px) rotateX(60deg);
+    animation: gridMove 20s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Neon Borders & Glows */
+.neon-border-pink {
+    border: 3px solid #ff00ff;
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.4), inset 0 0 15px rgba(255, 0, 255, 0.1);
+}
+
+.neon-border-cyan {
+    border: 2px solid #00fbfb;
+    box-shadow: 0 0 15px rgba(0, 251, 251, 0.4), inset 0 0 15px rgba(0, 251, 251, 0.1);
+}
+
+.neon-border-orange {
+    border: 2px solid #ffb77d;
+    box-shadow: 0 0 15px rgba(255, 183, 125, 0.4), inset 0 0 15px rgba(255, 183, 125, 0.1);
+}
+
+/* Buttons from Stitch */
+.btn-synth {
+    position: relative;
+    background: linear-gradient(135deg, #ff00ff 0%, #810081 100%);
+    border: 3px solid #ffabf3;
+    color: #ffffff;
+    font-family: var(--font-label);
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-synth:hover {
+    transform: translateY(-2px) scale(1.03);
+    background: linear-gradient(90deg, #ff00ff 0%, #a900a9 100%);
+    box-shadow: 0 0 35px rgba(255, 0, 255, 0.95), 0 0 12px rgba(0, 251, 251, 0.8);
+    border-color: #00fbfb;
+}
+
+.btn-synth-cyan {
+    position: relative;
+    background: linear-gradient(135deg, #00fbfb 0%, #004f4f 100%);
+    border: 2px solid #00fbfb;
+    color: #002020;
+    font-family: var(--font-label);
+    font-weight: 700;
+    box-shadow: 0 0 20px rgba(0, 251, 251, 0.5);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-synth-cyan:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 35px rgba(0, 251, 251, 0.95);
+    color: #ffffff;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #1a0030;
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff00ff, #00fbfb);
+    border-radius: 5px;
+    box-shadow: 0 0 10px #ff00ff;
+}
